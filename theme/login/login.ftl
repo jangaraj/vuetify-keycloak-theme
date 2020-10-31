@@ -8,7 +8,6 @@
       <div id="kc-form-wrapper" <#if realm.password && social.providers??>class="${properties.kcFormSocialAccountContentClass!} ${properties.kcFormSocialAccountClass!}"</#if>>
         <#if realm.password>
             <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">
-                <div class="${properties.kcFormGroupClass!}">
 
                     <#if usernameEditDisabled??>
                         <v-text-field 
@@ -36,9 +35,7 @@
                         >
                         </v-text-field>
                     </#if>
-                </div>
 
-                <div class="${properties.kcFormGroupClass!}">
                     <v-text-field
                       :rules="[rules.required]"            
                       :append-icon="showpassword ? 'visibility' : 'visibility_off'"              
@@ -51,32 +48,34 @@
                       @click:append="showpassword = !showpassword"
                       tabindex="2"
                     ></v-text-field> 
-                </div>
 
-                <div class="${properties.kcFormGroupClass!} ${properties.kcFormSettingClass!}">
-                    <div id="kc-form-options">
                         <#if realm.rememberMe && !usernameEditDisabled??>
-                            <div class="checkbox">
-                                <label>
                                     <#if login.rememberMe??>
-                                        <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox" checked> ${msg("rememberMe")}
+                                        <v-switch 
+                                          label="${msg("rememberMe")}"
+                                          tabindex="3" 
+                                          id="rememberMe" 
+                                          name="rememberMe"
+                                          :value="true"
+                                        >
+                                        </v-switch>
                                     <#else>
-                                        <input tabindex="3" id="rememberMe" name="rememberMe" type="checkbox"> ${msg("rememberMe")}
+                                        <v-switch
+                                          label="${msg("rememberMe")}"
+                                          tabindex="3"
+                                          id="rememberMe"
+                                          name="rememberMe"
+                                          :value="true"
+                                        >
+                                        </v-switch>
                                     </#if>
-                                </label>
-                            </div>
                         </#if>
-                        </div>
-                        <div class="${properties.kcFormOptionsWrapperClass!}">
-                            <#if realm.resetPasswordAllowed>
-                                <span><a tabindex="5" href="${url.loginResetCredentialsUrl}">${msg("doForgotPassword")}</a></span>
-                            </#if>
-                        </div>
-
-                  </div>
+                        <#if realm.resetPasswordAllowed>
+                            <a tabindex="5" href="${url.loginResetCredentialsUrl}">${msg("doForgotPassword")}</a>
+                        </#if>
 
 	      </v-card-text>
-              <v-card-actions id="kc-form-buttons">
+              <v-card-actions>
                 <v-spacer></v-spacer>
                 <input type="hidden" id="id-hidden-input" name="credentialId" <#if auth.selectedCredential?has_content>value="${auth.selectedCredential}"</#if>/>
                 <v-btn 
@@ -92,9 +91,6 @@
                   ${msg("doLogIn")}
                 </v-btn>
              </v-card-actions>
-
-                      <!-- input tabindex="4" class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" name="login" id="kc-login" type="submit" value="${msg("doLogIn")}"/ -->
-                  </div>
             </form>
         </#if>
         </div>
@@ -110,9 +106,7 @@
       </div>
     <#elseif section = "info" >
         <#if realm.password && realm.registrationAllowed && !registrationDisabled??>
-            <div id="kc-registration">
-                <span>${msg("noAccount")} <a tabindex="6" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
-            </div>
+            <span>${msg("noAccount")} <a tabindex="6" href="${url.registrationUrl}">${msg("doRegister")}</a></span>
         </#if>
     </#if>
 

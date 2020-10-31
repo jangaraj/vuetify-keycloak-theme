@@ -34,7 +34,7 @@
     </#if>
 </head>
 
-<body class="${properties.kcBodyClass!}">
+<body>
   <div id="app">
     <v-app>
       <v-main>
@@ -49,14 +49,13 @@
                   cols="12"
                   align="center"    
                 >
-
                   <v-img
-        src="${url.resourcesPath}/img/keycloak-logo-text.png"
-        aspect-ratio="1"
-        contain
-        max-width="500"
-        max-height="100"
-             ></v-img>
+                    src="${url.resourcesPath}/img/keycloak-logo-text.png"
+                    aspect-ratio="1"
+                    contain
+                    max-width="500"
+                    max-height="100"
+                  ></v-img>
         <v-card>
         <v-card-title>            
             <h1 class="headline"><#nested "header"></h1>
@@ -75,7 +74,12 @@
               <v-list>
                 <v-list-item>
                   <v-list-item-title>
-                  <v-switch v-model="$vuetify.theme.dark" label="Dark mode"></v-switch>
+                  <v-switch 
+                     v-model="this.$vuetify.theme.dark"
+                     label="Dark mode" 
+                     class="ml-2"
+                     @change="toggle_dark_mode"                    
+                   ></v-switch>
                   </v-list-item-title>
                 </v-list-item>                
 
@@ -170,7 +174,7 @@
                   <#if message.type = 'warning'><span class="${properties.kcFeedbackWarningIcon!}"></span></#if>
                   <#if message.type = 'error'><span class="${properties.kcFeedbackErrorIcon!}"></span></#if>
                   <#if message.type = 'info'><span class="${properties.kcFeedbackInfoIcon!}"></span></#if>
-                  <span class="kc-feedback-text">${kcSanitize(message.summary)?no_esc}</span>
+                  <span>${kcSanitize(message.summary)?no_esc}</span>
               </div>
           </#if>
 
